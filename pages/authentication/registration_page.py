@@ -11,6 +11,6 @@ class RegistrationPage(BasePage):
         self.registration_form = RegistrationFormComponent(page)
         self.registration_button = Button(page,'registration-page-registration-button', 'Registration')
 
-    def click_button(self):
+    def click_registration_button(self):
         self.registration_button.click()
 

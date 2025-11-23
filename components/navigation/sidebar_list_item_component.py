@@ -9,20 +9,21 @@ from elements.text import Text
 
 
 class SidebarListItemComponent(BaseComponent):
-    def __init__(self, page: Page, identifier: str):
+    def __init__(self, page: Page, identifier: str, title: str):
         super().__init__(page)
 
-        self.icon = Icon(page,'{identifier}-drawer-list-item-icon', '')
-        self.title = Text(page,'{identifier}-drawer-list-item-title-text', 'Dashboard')
-        self.button = Button(page,'{identifier}-drawer-list-item-button', 'Dashboard')
+        self.identifier = identifier
+        self.expected_title = title
 
-    def check_visible(self,identifier, title: str):
-        self.icon.check_visible(identifier=identifier)
+        self.icon = Icon(page, f'{identifier}-drawer-list-item-icon', '')
+        self.title = Text(page, f'{identifier}-drawer-list-item-title-text', title)
+        self.button = Button(page, f'{identifier}-drawer-list-item-button', title)
 
-        self.title.check_visible(identifier=identifier)
-        self.title.check_have_text(title,identifier=identifier)
-
-        self.button.check_visible(identifier=identifier)
+    def check_visible(self):
+        self.icon.check_visible()
+        self.title.check_visible()
+        self.title.check_have_text(self.expected_title)
+        self.button.check_visible()
 
     def navigate(self, expected_url: Pattern[str]):
         self.button.click()
