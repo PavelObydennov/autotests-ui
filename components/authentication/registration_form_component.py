@@ -1,6 +1,7 @@
 from playwright.sync_api import Page,expect
 from components.base_component import BaseComponent
 from elements.input import Input
+import allure
 
 
 class RegistrationFormComponent(BaseComponent):
@@ -11,6 +12,7 @@ class RegistrationFormComponent(BaseComponent):
         self.registration_username_input = Input(page,'registration-form-username-input', 'Username')
         self.registration_password_input = Input(page,'registration-form-password-input', 'Password')
 
+    @allure.step('Fill registration form')
     def fill_registration_form(self, email: str, username: str, password: str):
         self.registration_email_input.fill(email)
         self.registration_email_input.check_have_value(email)
@@ -20,7 +22,7 @@ class RegistrationFormComponent(BaseComponent):
 
         self.registration_password_input.fill(password)
         self.registration_password_input.check_have_value(password)
-
+    @allure.step('Check visible registration form')
     def check_visible(self):
         expect(self.registration_email_input).to_be_visible()
         expect(self.registration_username_input).to_be_visible()
